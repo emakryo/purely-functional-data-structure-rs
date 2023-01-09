@@ -99,6 +99,16 @@ impl<T: Clone> Stack<T> {
             (Cell::Cons(_, xs), n) => xs.drop(n - 1),
         }
     }
+    pub fn size(&self) -> usize {
+        fn s<T>(xs: &Stack<T>, n: usize) -> usize {
+            match xs.0.as_ref() {
+                Cell::Nil => n,
+                Cell::Cons(_, xs) => s(xs, n + 1),
+            }
+        }
+
+        s(self, 0)
+    }
 }
 
 impl<T: Clone + 'static> Stack<T> {
